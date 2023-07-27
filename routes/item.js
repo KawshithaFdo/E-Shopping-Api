@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 //Add
 router.post("/", async (req, res) => {
   const item = new Item({
-    item_id: req.body.item_id,
+    image: req.body.image,
     name: req.body.name,
     qty: req.body.qty,
     price: req.body.price,
@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const item = await Item.findById(req.params.id);
-    (item.item_id = req.body.item_id),
+    (item.image = req.body.image),
       (item.name = req.body.name),
       (item.qty = req.body.qty),
       (item.price = req.body.price),
@@ -47,7 +47,7 @@ router.put("/:id", async (req, res) => {
 });
 
 //Delete
-router.delete("/:id", async (req, res) => {
+router.delete("/id", async (req, res) => {
   try {
     const item = await Item.findById(req.params.id);
     const response = await item.remove();
@@ -58,20 +58,30 @@ router.delete("/:id", async (req, res) => {
 });
 
 //Get by item Id
-router.get("/:id", async (req, res) => {
+router.get("/id", async (req, res) => {
   try {
-    const item = [await Item.find({ item_id: req.params.id })];
+    const item = [await Item.findById({ _id: req.params.id })];
     res.json(item);
   } catch (err) {
     res.send("Err: " + err);
   }
 });
-
 //Get by item Category
-router.get("/:category", async (req, res) => {
+router.get("/category", async (req, res) => {
   try {
-    const item = [await Item.find({ category: req.params.category })];
-    res.json({ item });
+    const apple = await Item.find({ category: "Iphone" });
+    const android = await Item.find({ category: "Android" });
+    const huawei = await Item.find({ category: "Huawei" });
+    const redmi = await Item.find({ category: "Redmi" });
+    const oppo = await Item.find({ category: "Oppo" });
+
+    res.json({
+      Apple: apple,
+      Android: android,
+      Huawei: huawei,
+      Redmi: redmi,
+      Oppo: oppo,
+    });
   } catch (err) {
     res.send("Err: " + err);
   }

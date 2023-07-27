@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const user = require("./routes/user");
-const posts = require("./routes/item");
+const item = require("./routes/item");
 const cors = require("cors");
 
 const app = express();
@@ -22,7 +22,7 @@ con.on("open", () => {
 
 app.use(express.json());
 app.use("/user", user);
-app.use("/post", posts);
+app.use("/item", item);
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
