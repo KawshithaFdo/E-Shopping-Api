@@ -3,12 +3,13 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-
 const user = require("./routes/user");
 const posts = require("./routes/item");
+const cors = require("cors");
 
 const app = express();
 const port = 5000;
+app.use(cors({ origin: "*" }));
 
 const url = "mongodb://127.0.0.1/emobile";
 

@@ -34,15 +34,14 @@ router.post("/register", async (req, res) => {
     // Save the user to the "database"
     const newUser = new User({
       username: req.body.username,
-      gender: req.body.gender,
-      date_of_birth: req.body.date_of_birth,
+      date_of_birth: req.body.dob,
       password: hashedPassword,
       contact: req.body.contact,
       email: req.body.email,
       address: req.body.address,
     });
-    await newUser.save({ message: "User registered successfully" });
-    res.status(201).json();
+    await newUser.save();
+    res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
     console.error("Error registering user:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -54,8 +53,7 @@ router.put("/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     (user.username = req.body.username),
-      (user.gender = req.body.gender),
-      (user.date_of_birth = req.body.date_of_birth),
+      (user.date_of_birth = req.body.dob),
       (user.password = req.body.password),
       (user.contact = req.body.contact),
       (user.email = req.body.email),
@@ -92,30 +90,28 @@ router.get("/:id", async (req, res) => {
 
 //Login
 router.post("/login", async (req, res) => {
-    try {
-      const { username, password } = req.body;
-  
-      // Find the user by username
-      const user = await User.findOne({ username });
-      if (!user) {
-        return res.status(404).json({ error: "User not found" });
-      }
-  
-      // Compare the provided password with the hashed password
-      const passwordMatch = await bcrypt.compare(password, user.password);
-      if (!passwordMatch) {
-        return res.status(401).json({ error: "Invalid credentials" });
-      }
-  
-      // Generate a JWT token and send it in the response
-      const token = jwt.sign({ username }, secretKey, { expiresIn: "72hr" });
-  
-      res.json({ userDetails: user, Authorization: token });
-    } catch (error) {
-      console.error("Error logging in:", error);
-      res.status(500).json({ error: "Internal server error" });
+  try {
+    const { username, password } = req.body;
+    // Find the user by username
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
-  });
-  
+
+    // Compare the provided password with the hashed password
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    // Generate a JWT token and send it in the response
+    const token = jwt.sign({ username }, secretKey, { expiresIn: "72hr" });
+
+    res.json({ userDetails: user, Authorization: token });
+  } catch (error) {
+    console.error("Error logging in:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 module.exports = router;
