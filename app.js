@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const user = require("./routes/user");
 const item = require("./routes/item");
+const cart = require("./routes/cart");
+
 const cors = require("cors");
 
 const app = express();
@@ -23,6 +25,8 @@ con.on("open", () => {
 app.use(express.json());
 app.use("/user", user);
 app.use("/item", item);
+app.use("/cart", cart);
+
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
