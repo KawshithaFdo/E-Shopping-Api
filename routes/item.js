@@ -70,14 +70,14 @@ router.get("/id", async (req, res) => {
 router.get("/category", async (req, res) => {
   try {
     const apple = await Item.find({ category: "Iphone" });
-    const android = await Item.find({ category: "Android" });
+    const samsung = await Item.find({ category: "Samsung" });
     const huawei = await Item.find({ category: "Huawei" });
     const redmi = await Item.find({ category: "Redmi" });
     const oppo = await Item.find({ category: "Oppo" });
 
     res.json({
       Apple: apple,
-      Android: android,
+      Samsung: samsung,
       Huawei: huawei,
       Redmi: redmi,
       Oppo: oppo,
