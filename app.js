@@ -7,6 +7,7 @@ const user = require("./routes/user");
 const item = require("./routes/item");
 const cart = require("./routes/cart");
 const order = require("./routes/order");
+const admin = require("./routes/admin");
 
 const cors = require("cors");
 
@@ -28,6 +29,7 @@ app.use("/user", user);
 app.use("/item", item);
 app.use("/cart", cart);
 app.use("/order", order);
+app.use("/admin", admin);
 
 app.use(bodyParser.json());
 
