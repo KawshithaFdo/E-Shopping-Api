@@ -50,7 +50,7 @@ router.post("/register", async (req, res) => {
 });
 
 //Update
-router.put("/id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     (user.username = req.body.username),
@@ -68,7 +68,7 @@ router.put("/id", async (req, res) => {
 });
 
 //Delete
-router.delete("/id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     const response = await user.remove();
