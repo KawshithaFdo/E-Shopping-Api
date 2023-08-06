@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
 });
 
 //Update
-router.put("/:id", async (req, res) => {
+router.put("/id", async (req, res) => {
   try {
     const item = await Item.findById(req.params.id);
     (item.image = req.body.image),
@@ -47,7 +47,7 @@ router.put("/:id", async (req, res) => {
 });
 
 //Delete
-router.delete("/:id", async (req, res) => {
+router.delete("/id", async (req, res) => {
   try {
     const item = await Item.findById(req.params.id);
     const response = await item.remove();
